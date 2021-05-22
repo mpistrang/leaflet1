@@ -1,9 +1,9 @@
-$(document).ready(function () {
-  $.ajaxSetup({ cache: false });
-});
+// Set up the map
+const map = L.map("map", { center: [30.0, 0.0], zoom: 3 });
 
-var map = L.map("map", { center: [30.0, 0.0], zoom: 3 });
-
+/*
+Add the base layer from mapbox to the map
+*/
 L.tileLayer(
   // default public token
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWljaGFlbHBpc3RyYW5nIiwiYSI6ImNrb3ozOWV5NTBncXEydmxxdmc5dWhlNGEifQ.ZN7YsaG1SRwuaZ_GH00Zvg",
@@ -18,13 +18,9 @@ L.tileLayer(
   }
 ).addTo(map);
 
-var baseballIcon = L.icon({
-  iconUrl: "baseball-marker.png",
-  iconSize: [32, 37],
-  iconAnchor: [16, 37],
-  popupAnchor: [0, -28],
-});
-
+/*
+Set up the popup for each feature based onthe geojson propeties
+*/
 function onEachFeature(feature, layer) {
   if (feature.properties && feature.properties.popupContent) {
     const popupContent = feature.properties.popupContent;
@@ -32,8 +28,9 @@ function onEachFeature(feature, layer) {
   }
 }
 
-var pointsStyle = {
-  radius: 3,
+// shared syle for each point
+const pointsStyle = {
+  radius: 5,
   fillColor: "#ff7800",
   color: "#000",
   weight: 1,
@@ -41,8 +38,11 @@ var pointsStyle = {
   fillOpacity: 0.8,
 };
 
+/*
+Load the geojson from the file and add it to the map
+*/
 $.getJSON("points.geojson", function (data) {
-  var geojsonLayer = L.geoJSON(data, {
+  const geojsonLayer = L.geoJSON(data, {
     onEachFeature: onEachFeature,
     pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, pointsStyle);
