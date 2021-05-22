@@ -67,7 +67,7 @@
         }
       }
 
-      $.getJSON("data\\points.geojson", function (data) {
+      $.getJSON("points.geojson", function (data) {
         var geojsonLayer = L.geoJSON(data, { onEachFeature: onEachFeature });
         geojsonLayer.addTo(map);
       });
