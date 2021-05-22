@@ -1,9 +1,5 @@
-// Set up the map
 
-/*
-Add the base layer from mapbox to the map
-*/
-
+// set up base layers
 const mbAttr =
     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -23,14 +19,17 @@ const streets = L.tileLayer(mbUrl, {
   attribution: mbAttr,
 });
 
+// set up data layers
 const points = L.layerGroup();
 
+// Set up the map with the default layers showing
 const map = L.map("map", {
   center: [30.0, 0.0],
   zoom: 3,
   layers: [grayscale, points],
 });
 
+// Layer controls
 const baseLayers = {
   Grayscale: grayscale,
   Streets: streets,
